@@ -1,0 +1,1 @@
+include ':app', ':module-b', ':module-c', ':my-annotation', ':plugin', ':module-a'
