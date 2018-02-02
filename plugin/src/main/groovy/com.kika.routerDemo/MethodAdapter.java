@@ -31,6 +31,19 @@ public class MethodAdapter extends AdviceAdapter implements Opcodes {
             mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
             mv.visitLdcInsn("This is a test");
             mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+
+
+
+
+            mv.visitMethodInsn(INVOKESTATIC, "com/example/xinmei/routerdemo/Util", "getCalculator", "()Lcom/example/module_c/Calculate;", false);
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitInsn(RETURN);
+           // mv.visitLocalVariable("args", "[Ljava/lang/String;", null, l0, l3, 0);
+            //mv.visitLocalVariable("object", "Lcom/example/module_c/Calculate;", null, l2, l3, 1);
+            mv.visitMaxs(2, 2);
+            mv.visitEnd();
+
+
         }
     }
 }

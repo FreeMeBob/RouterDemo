@@ -8,8 +8,7 @@ import com.example.module_c.Calculate;
 
 public class Util {
 
-    public static Class getCalculator() {
-        return Calculate.class;
+    public static Object getCalculator() {
+        return  new Calculate();
     }
-
 }

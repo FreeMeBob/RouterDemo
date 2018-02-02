@@ -1,11 +1,13 @@
 package com.example.module_c;
 
+import com.example.my_annotation.AutoWireFrom;
 import com.example.my_annotation.Module;
 
 /**
  * Created by xinmei on 2018/1/25.
  */
 @Module
+@AutoWireFrom
 public class Calculate {
 
     public double add(double x,double y){

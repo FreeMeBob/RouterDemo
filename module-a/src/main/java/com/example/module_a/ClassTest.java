@@ -14,7 +14,6 @@ public class ClassTest {
         System.out.print("This is RouterDemo");
         TargetOperationClass targetOperationClass=new TargetOperationClass();
         targetOperationClass.testMethod1();
-        targetOperationClass.testMethod2();
         Calculate calculate=new Calculate();
         System.out.println(calculate.add(1,2));
         System.out.println(calculate.power(2.0,2));

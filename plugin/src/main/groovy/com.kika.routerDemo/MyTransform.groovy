@@ -23,6 +23,8 @@ import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
 
 class MyTransform extends Transform {
+
+    Operator mOperator=new Operator()
     @Override
     String getName() {
         return "MyTransform"
@@ -93,7 +95,7 @@ class MyTransform extends Transform {
         }
 
         File tempFile = null
-        if (path.endsWith(".jar")) {
+        if (jarInput.file.getAbsolutePath().endsWith(".jar")) {
             System.out.println("~~~~~~~~~~~~~~Enters jar $jarName ~~~~~~~~~~~~")
             JarFile jarFile = new JarFile(jarInput.file)
             Enumeration enumeration = jarFile.entries()
@@ -102,31 +104,22 @@ class MyTransform extends Transform {
             {
                 tempFile.delete()
             }
-            JarOutputStream jarOutputStream = new JarOutputStream(new FileOutputStream(tempFile));
-
+            JarOutputStream jarOutputStream = new JarOutputStream(new FileOutputStream(tempFile))
+            mOperator.appendClassPath(path)
             while (enumeration.hasMoreElements()) {
-                JarEntry jarEntry = new JarEntry(enumeration.nextElement())
-                String entryName = jarEntry.getName()
+                JarEntry jarEntry = (JarEntry) enumeration.nextElement()
+                def entryName = jarEntry.getName()
                 ZipEntry zipEntry = new ZipEntry(entryName)
-                InputStream inputStream = jarFile.getInputStream(jarEntry)
+                def jarClassName = entryName.split("\\.class")[0].replaceAll("/", ".")
+                byte[] b = mOperator.handleJar(jarClassName, entryName)
 
-                if (entryName.endsWith(".class") && !entryName.contains("R\$") &&
-                        !entryName.contains("R.class") && !entryName.contains("BuildConfig.class")) {
-                    System.out.println(entryName)
-                    jarOutputStream.putNextEntry(zipEntry);
-
-                    ClassReader classReader = new ClassReader(IOUtils.toByteArray(inputStream))
-                    ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
-                    ClassVisitor classVisitor = new DirectoryOperator(classWriter)
-
-                    classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
-                    byte[] code = classWriter.toByteArray()
-                    jarOutputStream.write(code)
+                if (b != null) {
+                    jarOutputStream.putNextEntry(zipEntry)
+                    jarOutputStream.write(b)
                 }
                 jarOutputStream.closeEntry()
             }
             jarOutputStream.close()
-            jarFile.close()
         }
         def dest = outputProvider.getContentLocation(jarName + md5Name,
                 jarInput.contentTypes, jarInput.scopes, Format.JAR)
