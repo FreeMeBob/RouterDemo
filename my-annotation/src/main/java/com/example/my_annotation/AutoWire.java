@@ -10,10 +10,10 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
- * Created by xinmei on 2018/2/2.
+ * Created by xinmei on 2018/1/30.
  */
 @Documented
 @Retention(CLASS)
 @Target({METHOD,CONSTRUCTOR,TYPE})
-public @interface AutoWireFrom {
+public @interface AutoWire {
 }

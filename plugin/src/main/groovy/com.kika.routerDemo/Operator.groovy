@@ -21,21 +21,18 @@ class Operator {
 
         CtClass cc = mPool.get(className);
 
-        if (cc.hasAnnotation("com.kikatech.lego.annotation.Module") && !mConf.isBlockEnable(className)) {
+        if (cc.hasAnnotation("com.example.my_annotation.Module")) {
             CtMethod[] methods = cc.getDeclaredMethods();
             println "********************** handle  module *************************"
             for (int i = 0; i < methods.length; i++) {
                 CtMethod method = methods[i]
                 String methodName = method.getName()
-                if (method.hasAnnotation("com.kikatech.lego.annotation.Export")) {
-                    println "********************* export method " + methodName + " **********************"
-                    StringBuilder sb = new StringBuilder(100)
-                    CtClass returnType = method.getReturnType()
-                    sb.append("return " + BlockUtils.getZeroValue(returnType.getName()) + ";")
-                    println("-------------------------------- method body -------------------- \n" + sb.toString())
-                    method.setBody(sb.toString())
-                } else {
-                    cc.removeMethod(method)
+                if (method.hasAnnotation("com.example.my_annotation.AutoWire")) {
+                    System.out.println("============ $methodName ============")
+                    String str = """System.out.println("This is a test")"""
+                    method.insertBefore(str)
+                    CtConstructor[] constructor = cc.getConstructor()
+                    constructor[0].setBody("this.num=6")
                 }
             }
             cc.writeFile(rootDir)
@@ -50,14 +47,23 @@ class Operator {
                 println("============== handle className " + className + " ===================")
                 CtClass cc = mPool.get(className)
                 if (cc.hasAnnotation("com.example.my_annotation.Module")) {
+                    CtMethod[] methods = cc.getDeclaredMethods();
                     println "********************** handle  module *************************"
-                    if(cc.hasAnnotation("com.example.my_annotation.AutoWireTo")){
-
+                    for (int i = 0; i < methods.length; i++) {
+                        CtMethod method = methods[i]
+                        String methodName = method.getName()
+                        if (method.hasAnnotation("com.example.my_annotation.AutoWire")) {
+                            System.out.println("============ $methodName ============")
+                            String str = """System.out.println("This is a test")"""
+                            method.insertBefore(str)
+                            CtConstructor[] constructor = cc.getConstructor()
+                            constructor[0].setBody("this.num=6;")
+                        }
                     }
+                    cc.writeFile(rootDir)
+                    cc.detach()
+                    return code
                 }
-                byte[] code = cc.toBytecode()
-                cc.detach()
-                return code
             }
         }
         catch (NotFoundException e) {
