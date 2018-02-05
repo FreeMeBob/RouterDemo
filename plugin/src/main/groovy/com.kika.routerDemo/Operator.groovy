@@ -52,15 +52,24 @@ class Operator {
                     for (int i = 0; i < methods.length; i++) {
                         CtMethod method = methods[i]
                         String methodName = method.getName()
+                        if(method.hasAnnotation("com.example.my_annotation.AutoWirePrep")){
+                            String prep = """ Object calculator=Util.getCalculator();"""
+                            String prep2="""targetOperationClass.operation(calculator);"""
+                            method.insertBefore(prep)
+                            method.insertBefore(prep2)
+                        }
                         if (method.hasAnnotation("com.example.my_annotation.AutoWire")) {
                             System.out.println("============ $methodName ============")
-                            String str = """System.out.println("This is a test")"""
+                            String str = """System.out.println("This is a test");"""
                             method.insertBefore(str)
-                            CtConstructor[] constructor = cc.getConstructor()
-                            constructor[0].setBody("this.num=6;")
+                            String despriptor=Descriptor.ofConstructor(new CtClass[0])
+                            CtConstructor constructor = cc.getConstructor(despriptor)
+                            constructor.setBody("this.num=6;")
+                            String insert="""this.object=object;"""
+                            constructor.setBody(insert)
                         }
                     }
-                    cc.writeFile(rootDir)
+                    byte[] code = cc.toBytecode()
                     cc.detach()
                     return code
                 }

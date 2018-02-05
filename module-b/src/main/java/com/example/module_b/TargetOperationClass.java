@@ -12,7 +12,7 @@ import com.example.my_annotation.Module;
 public class TargetOperationClass {
 
 
-    Calculate object;
+    Object object;
     int num=0;
     public TargetOperationClass(){
 
@@ -23,7 +23,7 @@ public class TargetOperationClass {
     System.out.println("This is testMethod1");
     }
 @AutoWire
-    public void operation() {
+    public void operation(Object object) throws IllegalAccessException, InstantiationException {
 
 //        Object object=mClass.newInstance();
 //        Method [] methods=mClass.getMethods();
@@ -34,12 +34,11 @@ public class TargetOperationClass {
 //        Method m1=mClass.getMethod("add",double.class,double.class);
 //        double d1=(double)m1.invoke(object,2.0,2.0);
 //        System.out.println("========= "+d1+" ===========");
-//
 //        Method m2=mClass.getMethod("power",double.class,int.class);
 //        double d2=(double)m2.invoke(object,2.0,2);
-
             //TODO： 实例化 object 通过A方法 Util
-
+        //object=mClass.newInstance(); code to be injected
+        // this.object=object
         System.out.println("***************** " + object);
 
     }
