@@ -69,10 +69,11 @@ class Operator {
                             constructor.setBody(mInsert)
                         }
                     }
-                    byte[] code = cc.toBytecode()
-                    cc.detach()
-                    return code
+
                 }
+                byte[] code = cc.toBytecode()
+                cc.detach()
+                return code
             }
         }
         catch (NotFoundException e) {
