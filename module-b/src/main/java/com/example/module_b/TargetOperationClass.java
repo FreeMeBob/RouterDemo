@@ -15,7 +15,14 @@ public class TargetOperationClass {
     Object object;
     int num=0;
     public TargetOperationClass(){
-
+        /*try{
+            Class moduleC=Class.forName("com.example.module_c.Calculate");
+            Object object=moduleC.newInstance();
+            this.object=object;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }*/
     }
 
     public void testMethod1() {
@@ -23,14 +30,16 @@ public class TargetOperationClass {
     System.out.println("This is testMethod1");
     }
 @AutoWire
-    public void operation(Object object) throws IllegalAccessException, InstantiationException {
+    public void operation() throws IllegalAccessException, InstantiationException {
+
+        System.out.println("==========="+object);
+        }
 
 //        Object object=mClass.newInstance();
 //        Method [] methods=mClass.getMethods();
 //        for(Method m:methods){
 //            System.out.print(m);
 //        }
-//
 //        Method m1=mClass.getMethod("add",double.class,double.class);
 //        double d1=(double)m1.invoke(object,2.0,2.0);
 //        System.out.println("========= "+d1+" ===========");
@@ -39,7 +48,6 @@ public class TargetOperationClass {
             //TODO： 实例化 object 通过A方法 Util
         //object=mClass.newInstance(); code to be injected
         // this.object=object
-        System.out.println("***************** " + object);
+
 
     }
-}

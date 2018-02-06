@@ -19,7 +19,7 @@ public class ClassTest {
         System.out.println("============= This is RouterDemo ============");
         TargetOperationClass targetOperationClass=new TargetOperationClass();
         targetOperationClass.testMethod1();
-
+        targetOperationClass.operation();
        /* Object calculator=Util.getCalculator();
         targetOperationClass.operation(calculator);*/
 

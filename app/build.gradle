@@ -39,4 +39,4 @@ buildscript {
         classpath 'com.kika.routerDemo:plugin:1.0.0'
     }
 }
-apply plugin: 'com.kikatech.routerDemo'
+//apply plugin: 'com.kikatech.routerDemo'

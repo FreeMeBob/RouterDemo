@@ -47,7 +47,7 @@ class MyTransform extends Transform {
 
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
-        println '=============== BlockTransformer transform begin ==============='
+        println '=============== Mytransform begins ==============='
         transformInvocation.getInputs().each { TransformInput input ->
             input.directoryInputs.each { DirectoryInput directoryInput ->
                 handleDirectory(directoryInput, transformInvocation.getOutputProvider())
@@ -56,7 +56,7 @@ class MyTransform extends Transform {
                 handleJar(jarInput, transformInvocation.getOutputProvider(), transformInvocation.incremental)
             }
         }
-        println '=============== BlockTransformer transform end ==============='
+        println '=============== Mytransform ends ==============='
 
     }
 
