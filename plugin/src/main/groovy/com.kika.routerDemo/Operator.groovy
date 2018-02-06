@@ -58,12 +58,11 @@ class Operator {
                             method.insertBefore(str)
                             String despriptor = Descriptor.ofConstructor(new CtClass[0])
                             CtConstructor constructor = cc.getConstructor(despriptor)
-                            String mInsert = """ try{
-            Class moduleC=Class.forName("com.example.module_c.Calculate");
-            Object object=moduleC.newInstance();
-            this.object=object;
-        }
-        catch (Exception e){
+                            String mInsert = """ try {
+            Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
+            java.lang.reflect.Method utilMethod = utilClass.getMethod("getCalculator", null);
+            this.object = utilMethod.invoke(null, null);
+        } catch (Exception e) {
             e.printStackTrace();
         }"""
                             constructor.setBody(mInsert)
