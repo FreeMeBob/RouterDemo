@@ -13,8 +13,7 @@ import java.lang.reflect.Method;
 @Module
 public class TargetOperationClass {
 
-
-    Object object;
+    Calculate object;
     int num = 0;
 
     public TargetOperationClass() {
@@ -38,20 +37,4 @@ public class TargetOperationClass {
 
         System.out.println("===========" + object);
     }
-
-//        Object object=mClass.newInstance();
-//        Method [] methods=mClass.getMethods();
-//        for(Method m:methods){
-//            System.out.print(m);
-//        }
-//        Method m1=mClass.getMethod("add",double.class,double.class);
-//        double d1=(double)m1.invoke(object,2.0,2.0);
-//        System.out.println("========= "+d1+" ===========");
-//        Method m2=mClass.getMethod("power",double.class,int.class);
-//        double d2=(double)m2.invoke(object,2.0,2);
-    //TODO： 实例化 object 通过A方法 Util
-    //object=mClass.newInstance(); code to be injected
-    // this.object=object
-
-
 }
