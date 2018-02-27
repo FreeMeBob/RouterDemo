@@ -9,8 +9,10 @@ import javassist.bytecode.Descriptor
 
 class Operator {
     ClassPool mPool = ClassPool.getDefault();
-
-
+    Configuration config
+    Operator(Configuration config){
+        this.config=config
+    }
     def appendClassPath(String classPath) {
         mPool.appendClassPath(classPath)
     }
@@ -48,6 +50,7 @@ class Operator {
                 CtClass cc = mPool.get(className)
                 if (cc.hasAnnotation("com.example.my_annotation.Module")) {
                     CtMethod[] methods = cc.getDeclaredMethods();
+
                     println "********************** handle  module *************************"
                     for (int i = 0; i < methods.length; i++) {
                         CtMethod method = methods[i]
@@ -58,14 +61,19 @@ class Operator {
                             method.insertBefore(str)
                             String despriptor = Descriptor.ofConstructor(new CtClass[0])
                             CtConstructor constructor = cc.getConstructor(despriptor)
-                            String mInsert = """ try {
-            Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
-            java.lang.reflect.Method utilMethod = utilClass.getMethod("getCalculator", null);
+                            String classname=config.getClassName()
+                            String methodname=config.getMethod()
+                            String params=config.getParams()
+                            System.out.println("11111111")
+                           String mInsert = """ try {
+            Class utilClass = Class.forName("$classname");
+            java.lang.reflect.Method utilMethod = utilClass.getMethod("$methodname", $params);
             this.object = utilMethod.invoke(null, null);
         } catch (Exception e) {
             e.printStackTrace();
         }"""
                             constructor.setBody(mInsert)
+                            System.out.println("22222222")
                         }
                     }
 

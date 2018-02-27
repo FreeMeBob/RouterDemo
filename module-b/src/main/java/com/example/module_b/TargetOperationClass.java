@@ -13,14 +13,14 @@ import java.lang.reflect.Method;
 @Module
 public class TargetOperationClass {
 
-    Calculate object;
+    Object object;
     int num = 0;
 
     public TargetOperationClass() {
         /*try {
             Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
-            Method utilMethod = utilClass.getMethod("getCalculator", null);
-            this.object = utilMethod.invoke(null, null);
+            Method utilMethod = utilClass.getMethod("getCalculator", new Class[0]);
+            this.object = utilMethod.invoke(null, new Object[]{});
         } catch (Exception e) {
             e.printStackTrace();
         }*/

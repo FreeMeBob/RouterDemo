@@ -10,7 +10,6 @@ import com.android.build.api.transform.TransformInput
 import com.android.build.api.transform.TransformInvocation
 import com.android.build.api.transform.TransformOutputProvider
 import com.android.build.gradle.internal.pipeline.TransformManager
-import org.apache.commons.io.IOUtils
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
@@ -21,10 +20,14 @@ import java.util.jar.JarEntry
 import java.util.jar.JarFile
 import java.util.jar.JarOutputStream
 import java.util.zip.ZipEntry
-
 class MyTransform extends Transform {
 
-    Operator mOperator=new Operator()
+    Operator mOperator
+    Configuration mConfig
+    MyTransform(Configuration config){
+        mConfig=config
+        mOperator=new Operator(mConfig)
+    }
     @Override
     String getName() {
         return "MyTransform"
@@ -62,7 +65,8 @@ class MyTransform extends Transform {
 
     void handleDirectory(DirectoryInput directoryInput, TransformOutputProvider transformOutputProvider) {
         System.out.println("============= handle directory " + directoryInput.file.getAbsolutePath() + " ==============")
-        if (directoryInput.file.isDirectory()) {
+        if (directoryInput.file.isDirectory())
+        {
             directoryInput.file.eachFileRecurse {
                 File file ->
                     def name = file.name
@@ -112,7 +116,6 @@ class MyTransform extends Transform {
                 ZipEntry zipEntry = new ZipEntry(entryName)
                 def jarClassName = entryName.split("\\.class")[0].replaceAll("/", ".")
                 byte[] b = mOperator.handleJar(jarClassName, entryName)
-
                 if (b != null) {
                     jarOutputStream.putNextEntry(zipEntry)
                     jarOutputStream.write(b)
