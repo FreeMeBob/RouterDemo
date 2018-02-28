@@ -15,4 +15,5 @@ public class Calculate {
 
         return Math.pow(x,y);
     }
+
 }

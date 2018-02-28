@@ -12,7 +12,9 @@ class PluginEntry implements Plugin<Project> {
         def android=project.extensions.getByType(AppExtension)
         def objectList=project.extensions.create('objectList',ObjectList)
         System.out.println(objectList)
-        android.registerTransform(new MyTransform(mConfig))
+        List<File> list = android.getBootClasspath()
+        String androidJar = list[0]
+        android.registerTransform(new MyTransform(mConfig,androidJar))
         project.afterEvaluate {
             mConfig.start(objectList)
         }

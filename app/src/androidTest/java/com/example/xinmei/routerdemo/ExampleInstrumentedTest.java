@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.module_c.Parse;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,5 +24,15 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.example.xinmei.routerdemo", appContext.getPackageName());
+    }
+
+    @Test
+    public void testXmlParase(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+        System.out.println("222222222");
+        Parse parse=new Parse(appContext);
+        parse.parseXML();
+        System.out.println("5555555");
+
     }
 }

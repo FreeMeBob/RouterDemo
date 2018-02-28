@@ -24,9 +24,9 @@ class MyTransform extends Transform {
 
     Operator mOperator
     Configuration mConfig
-    MyTransform(Configuration config){
+    MyTransform(Configuration config, String androidJar){
         mConfig=config
-        mOperator=new Operator(mConfig)
+        mOperator=new Operator(mConfig,androidJar)
     }
     @Override
     String getName() {

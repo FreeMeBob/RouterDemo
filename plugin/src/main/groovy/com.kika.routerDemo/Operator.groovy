@@ -10,8 +10,9 @@ import javassist.bytecode.Descriptor
 class Operator {
     ClassPool mPool = ClassPool.getDefault();
     Configuration config
-    Operator(Configuration config){
+    Operator(Configuration config, String androidJar){
         this.config=config
+        mPool.insertClassPath(androidJar)
     }
     def appendClassPath(String classPath) {
         mPool.appendClassPath(classPath)
@@ -59,20 +60,29 @@ class Operator {
                             System.out.println("============ $methodName ============")
                             String str = """System.out.println("This is a test");"""
                             method.insertBefore(str)
-                            String despriptor = Descriptor.ofConstructor(new CtClass[0])
-                            CtConstructor constructor = cc.getConstructor(despriptor)
+                            CtConstructor[] constructors= cc.getConstructors()
+                            for(CtConstructor t:constructors){
+                                System.out.println(t)
+                            }
+                            //String despriptor = Descriptor.ofConstructor(new CtClass[0])
+                            //CtConstructor constructor = cc.getConstructor(despriptor)
                             String classname=config.getClassName()
                             String methodname=config.getMethod()
                             String params=config.getParams()
                             System.out.println("11111111")
-                           String mInsert = """ try {
-            Class utilClass = Class.forName("$classname");
-            java.lang.reflect.Method utilMethod = utilClass.getMethod("$methodname", $params);
+                           String mInsert = """try {
+            Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
+            java.lang.reflect.Method utilMethod = utilClass.getMethod("getCalculator", null);
             this.object = utilMethod.invoke(null, null);
+
+           Class mUtilClass = Class.forName("com.example.xinmei.routerdemo.Util");
+            java.lang.reflect.Method mUtilMethod = mUtilClass.getMethod("getContextTest", Context.class);
+            System.out.println("context in module b is :"+context);
+            this.object2=mUtilMethod.invoke(null,context);
         } catch (Exception e) {
             e.printStackTrace();
         }"""
-                            constructor.setBody(mInsert)
+                            constructors[1].setBody(mInsert)
                             System.out.println("22222222")
                         }
                     }
