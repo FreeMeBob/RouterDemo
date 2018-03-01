@@ -72,13 +72,12 @@ class Operator {
                             System.out.println("11111111")
                            String mInsert = """try {
             Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
-            java.lang.reflect.Method utilMethod = utilClass.getMethod("getCalculator", null);
+            java.lang.reflect.Method utilMethod = utilClass.getMethod("getCalculator", new Class[0]);
             this.object = utilMethod.invoke(null, null);
-
-           Class mUtilClass = Class.forName("com.example.xinmei.routerdemo.Util");
-            java.lang.reflect.Method mUtilMethod = mUtilClass.getMethod("getContextTest", Context.class);
+            this.context=context;
+            java.lang.reflect.Method utilMethod2 = utilClass.getMethod("getContextTest", new Class[]{android.content.Context.class});
             System.out.println("context in module b is :"+context);
-            this.object2=mUtilMethod.invoke(null,context);
+            this.object2=utilMethod2.invoke(null,new Object[]{context});
         } catch (Exception e) {
             e.printStackTrace();
         }"""

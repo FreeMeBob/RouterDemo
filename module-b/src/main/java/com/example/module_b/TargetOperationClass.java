@@ -19,6 +19,7 @@ public class TargetOperationClass {
     Object object;
     int num = 0;
     Object object2;
+    Context context;
     public TargetOperationClass() {
         /*try {
             Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
@@ -31,19 +32,19 @@ public class TargetOperationClass {
     }
     public TargetOperationClass(Context context){
 
-       /* try {
-            Class utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
+       /*try {
+            Class<?> utilClass = Class.forName("com.example.xinmei.routerdemo.Util");
             Method utilMethod = utilClass.getMethod("getCalculator", new Class[0]);
             this.object = utilMethod.invoke(null, new Object[]{});
-
-            Class mUtilClass = Class.forName("com.example.xinmei.routerdemo.Util");
-            Method mUtilMethod = mUtilClass.getMethod("getContextTest", Context.class);
+            this.context=context;g
+            Method utilMethod2 = utilClass.getMethod("getContextTest", new Class[]{Context.class});
             System.out.println("context in module b is :"+context);
-            this.object2=mUtilMethod.invoke(null,context);
+            this.object2=utilMethod2.invoke(null,new Object[]{context});
+
         } catch (Exception e) {
             e.printStackTrace();
-        }
-*/
+        }*/
+
     }
     public void testMethod1() {
 

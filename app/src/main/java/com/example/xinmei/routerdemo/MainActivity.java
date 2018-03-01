@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }*/
+
         TargetOperationClass targetOperationClass=new TargetOperationClass(context);
         targetOperationClass.testMethod1();
         try {
